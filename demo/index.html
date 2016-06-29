@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
+  <title>歌词音乐播放器演示</title>
+  <style>
+  body{
+    font-family: '微软雅黑';
+    background-color: #F0F0F0;
+  }
+  #main{
+    margin: 40px auto;
+    width: 300px;
+    border: 1px solid #D6D6D6;
+    background-color: #FFFFFF;
+    border-radius: 3px;
+    box-shadow: 0 0 2px 1px #797979;
+  }
+  audio{
+    width: 100%;
+  }
+  #lyric{
+    height: 295px;
+    overflow: hidden;
+  }
+  ul{
+    position: relative;
+    top: 40px;
+    list-style: none;
+    padding: 0;
+    -webkit-transition: top .4s;
+    -o-transition: top .4s;
+    transition: top .4s;
+  }
+  li{
+    text-align: center;
+    font-size: 13px;
+    line-height: 26px;
+    transition: all .5s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  li.active{
+    font-weight: bold;
+    font-size: 16px;
+    color: #89391F;
+  }
+  li:empty{
+    height: 26px;
+  }
+  </style>
+  <script src="../lib/jquery.js"></script>
+</head>
+<body>
+  <div id="main">
+    <div id="music">
+      <audio src="../res/pxyz.mp3" loop controls autoplay></audio>
+    </div>
+    <div id="lyric">
+      <ul id="lyricContainer"></ul>
+    </div>
+  </div>
+  <script src="../lyric.js"></script>
+  <script>
+    var m = new MusicPlayer({
+      lyric: "../res/pxyz.lrc", //歌词文件地址，UTF-8编码，在file协议下会取不到
+      container: "#lyricContainer", //歌词渲染容器
+      audio: 'audio', //绑定到的音频元素
+      lyricChange: function(e){ //歌词状态改变时
+        $('#lyricContainer').css('top', - e.target.position().top + 40);
+      }
+    });
+  </script>
+</body>
+</html>
