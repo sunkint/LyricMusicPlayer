@@ -8,6 +8,7 @@
     this.lrcPath = obj.lyric;
     this.lrcContainer = $(obj.container);
     this.player = $(obj.audio);
+    this.paused = false;
     if(typeof obj.lyricChange == 'function'){
       this.lyricChange = obj.lyricChange;
     }
@@ -55,6 +56,8 @@
     }
     var that = this, nt = 0;
     this.player.on('timeupdate', function(e){
+      if(that.paused) return;
+
       var t = Math.floor(that.player[0].currentTime);
       if(nt == t) return;
       nt = t;
@@ -70,6 +73,14 @@
 
   MusicPlayer.prototype.lrcError = function(){
     console.error("歌词加载失败！");
+  }
+
+  MusicPlayer.prototype.pause = function(){
+    this.paused = true;
+  }
+
+  MusicPlayer.prototype.restart = function(){
+    this.paused = false;
   }
 
 })(jQuery);
